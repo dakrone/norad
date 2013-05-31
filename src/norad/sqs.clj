@@ -35,10 +35,13 @@
 
 (defn consume-and-notify
   []
-  (dorun
-   (map
-    (sqs/deleting-consumer client enqueue-notification)
-    (sqs/receive client q :limit 100))))
+  (try
+    (dorun
+    (map
+     (sqs/deleting-consumer client enqueue-notification)
+     (sqs/receive client q :limit 100)))
+    (catch Throwable e
+      (println "Exception trying to consume SQS messages:" e))))
 
 (defn publish-message [msg]
   (sqs/send client q msg))
