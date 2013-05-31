@@ -15,6 +15,12 @@ $ curl localhost:8080
 
 Heavy WIP, nothing really interesting here yet.
 
+## Modules
+
+See:
+
+- [screamy](https://github.com/dakrone/screamy)
+
 ## License
 
 Copyright © 2013 Matthew Lee Hinman
