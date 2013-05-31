@@ -9,7 +9,8 @@
 (msg/start "queue.notifications")
 
 ;; Set up HTTP notification handler
-(web/start "/" ring-handler
+(web/start "/notify"
+           notify-handler
            :init #(msg/publish "queue.notifications" "Started Norad MCP")
            :destroy #(msg/publish "queue.notifications" "Stopped Norad MCP"))
 

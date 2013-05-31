@@ -1,7 +1,9 @@
 (ns norad.core
   (:require [immutant.messaging :as msg]))
 
-(defn ring-handler [request]
+(defn notify-handler
+  "Handler for enqueuing notification messages"
+  [request]
   (try
     (msg/publish "queue.notifications" (slurp (:body request)))
     {:status 200
