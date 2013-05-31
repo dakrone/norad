@@ -31,6 +31,7 @@ Heavy a work in progress.
 See:
 
 - [screamy](https://github.com/dakrone/screamy)
+- [metube](https://github.com/dakrone/metube)
 
 ## License
 

@@ -1,5 +1,6 @@
 (ns norad.sqs
-  (:require [immutant.messaging :as msg]
+  (:require [norad.queues :refer :all]
+            [immutant.messaging :as msg]
             [cemerick.bandalore :as sqs]
             [clojure.java.io :refer [resource]]))
 
@@ -31,7 +32,7 @@
 
 (defn enqueue-notification
   [{:keys [body] :as msg}]
-  (msg/publish "queue.notifications" body))
+  (msg/publish notify-queue body))
 
 (defn consume-and-notify
   []
