@@ -9,11 +9,6 @@
 ;; Create notification queue if needed
 (msg/start notify-queue)
 
-;; Set up HTTP notification handler
-(web/start "/notify"
-           notify-handler
-           :init #(msg/publish notify-queue "Started Norad MCP")
-           :destroy #(msg/publish notify-queue "Stopped Norad MCP"))
-
 ;; Begin SQS consumption, every 10 seconds
 (jobs/schedule "sqs-notification" consume-and-notify :every 10000)
+(msg/publish notify-queue "Initialized norad SQS pulling")
