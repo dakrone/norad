@@ -4,20 +4,16 @@ Master-control for my personal Immutant MCP.
 
 ## Usage
 
-```
-$ lein immutant deploy
-$ lein immutant run
-```
-
-```
-$ curl localhost:8080/notify -d'this is a message'
-```
-
 Put this into `etc/sqs.clj`:
 
 ```clojure
 {:aws-id "A..........."
  :aws-secret-key "...................."}
+```
+
+```
+$ lein immutant deploy
+$ lein immutant run
 ```
 
 Norad will then attempt to consume messages from
