@@ -13,7 +13,9 @@
 ;; path given here is a sub-path to the global context-path for the app
 ;; if any.
 
-(web/start "/" ring-handler)
+(web/start "/" ring-handler
+           :init #(msg/publish "queue.notifications" "Started Norad MCP")
+           :destroy #(msg/publish "queue.notifications" "Stopped Norad MCP"))
 ;; (web/start "/foo" a-different-ring-handler)
 
 ;; To start a Noir app:

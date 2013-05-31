@@ -2,7 +2,7 @@
   (:require [immutant.messaging :as msg]))
 
 (defn ring-handler [request]
-  (msg/publish "queue.notifications" {:thing 1})
+  (msg/publish "queue.notifications" (slurp (:body request)))
   {:status 200
-   :body "Greetings from Norad"
-   :headers {"Content-Type" "text/html"}})
+   :body (str {:success true})
+   :headers {"Content-Type" "application/edn"}})
