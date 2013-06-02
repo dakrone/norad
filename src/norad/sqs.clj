@@ -15,32 +15,42 @@
   (sqs/list-queues client))
 
 (defn get-or-make-queue []
-  (let [qs (queues)]
-    (if (some #(.contains % "norad-notifications") qs)
-      (first qs)
-      (do
-        (println "Creating norad SQS queue...")
-        (let [qname (sqs/create-queue client "norad-notifications")]
-          (println "Created queue:" qname)
-          qname)))))
+  (try
+    (let [qs (queues)]
+      (if (some #(.contains % "norad-notifications") qs)
+        (first qs)
+        (do
+          (println "Creating norad SQS queue...")
+          (let [qname (sqs/create-queue client "norad-notifications")]
+            (println "Created queue:" qname)
+            qname))))
+    (catch Exception _ nil)))
 
 (defn delete-queue []
   (let [qname (get-or-make-queue)]
     (sqs/delete-queue client qname)))
 
-(defonce q (get-or-make-queue))
+(def q (atom (get-or-make-queue)))
 
-(defn enqueue-notification
-  [{:keys [body] :as msg}]
-  (msg/publish notify-queue body))
+(defn enqueue-message
+  [{:keys [body]}]
+  (try
+    (let [{:keys [queue msg]} (read-string body)]
+      (msg/publish queue msg))
+    (catch Exception e
+      (println "Unable to enqueue notification:" e))))
 
-(defn consume-and-notify
+(defn consume-and-enqueue
   []
   (try
-    (dorun
-    (map
-     (sqs/deleting-consumer client enqueue-notification)
-     (sqs/receive client q :limit 100)))
+    (if (nil? @q)
+      ;; There was a failure attempting to resolve the queue name, try again
+      (reset! q (get-or-make-queue))
+      ;; Or grab messages from it
+      (dorun
+       (map
+        (sqs/deleting-consumer client enqueue-message)
+        (sqs/receive client @q :limit 100))))
     (catch Throwable e
       (println "Exception trying to consume SQS messages:" e))))
 
