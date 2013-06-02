@@ -1,6 +1,5 @@
 (ns norad.sqs
-  (:require [norad.queues :refer :all]
-            [immutant.messaging :as msg]
+  (:require [immutant.messaging :as msg]
             [cemerick.bandalore :as sqs]
             [clojure.java.io :refer [resource]]))
 

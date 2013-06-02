@@ -1,10 +1,9 @@
 (ns immutant.init
-  (:require [norad.core :refer :all]
-            [norad.sqs :refer [consume-and-enqueue]]
-            [norad.queues :refer :all]
-            [immutant.messaging :as msg]
-            [immutant.web :as web]
-            [immutant.jobs :as jobs]))
+  (:require [norad.sqs :refer [consume-and-enqueue]]
+            [immutant.jobs :as jobs]
+            [immutant.messaging :as msg]))
+
+(def notify-queue "queue.notifications")
 
 ;; Create notification queue if needed
 (msg/start notify-queue)
