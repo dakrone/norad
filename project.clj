@@ -6,5 +6,4 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.immutant/immutant "1.0.0.beta1"]
                  [com.cemerick/bandalore "0.0.3"]]
-  :immutant {:context-path "/"}
   :resource-paths ["etc"])
