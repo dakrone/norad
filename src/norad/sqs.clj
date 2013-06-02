@@ -16,11 +16,11 @@
 (defn get-or-make-queue []
   (try
     (let [qs (queues)]
-      (if (some #(.contains % "norad-notifications") qs)
+      (if (some #(.contains % "norad") qs)
         (first qs)
         (do
           (println "Creating norad SQS queue...")
-          (let [qname (sqs/create-queue client "norad-notifications")]
+          (let [qname (sqs/create-queue client "norad")]
             (println "Created queue:" qname)
             qname))))
     (catch Exception _ nil)))
