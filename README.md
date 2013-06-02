@@ -20,11 +20,17 @@ Norad will then attempt to consume messages from
 [SQS](https://aws.amazon.com/sqs/) and send them to your notifier
 (presumably screamy).
 
+Messages should be a string that looks like:
+
+```clojure
+"{:queue \"queue.notifications\" :msg \"this is a message\"}"
+```
+
 Heavy a work in progress.
 
 ## Modules
 
-See:
+See also:
 
 - [screamy](https://github.com/dakrone/screamy)
 - [metube](https://github.com/dakrone/metube)
