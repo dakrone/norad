@@ -5,5 +5,6 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.immutant/immutant "1.0.0.beta1"]
-                 [com.cemerick/bandalore "0.0.3"]]
+                 [com.cemerick/bandalore "0.0.3"]
+                 [org.clojure/tools.logging "0.2.6"]]
   :resource-paths ["etc"])

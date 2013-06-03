@@ -1,7 +1,8 @@
 (ns norad.sqs
   (:require [immutant.messaging :as msg]
             [cemerick.bandalore :as sqs]
-            [clojure.java.io :refer [resource]]))
+            [clojure.java.io :refer [resource]]
+            [clojure.tools.logging :as log]))
 
 (.setLevel (java.util.logging.Logger/getLogger "com.amazonaws")
            java.util.logging.Level/WARNING)
@@ -19,9 +20,9 @@
       (if (some #(.contains % "norad") qs)
         (first qs)
         (do
-          (println "Creating norad SQS queue...")
+          (log/info "Creating norad SQS queue...")
           (let [qname (sqs/create-queue client "norad")]
-            (println "Created queue:" qname)
+            (log/info "Created queue:" qname)
             qname))))
     (catch Exception _ nil)))
 
@@ -37,6 +38,7 @@
     (let [{:keys [queue msg]} (read-string body)]
       (msg/publish queue msg))
     (catch Exception e
+      (log/warn e "Unable to enqueue notification")
       (println "Unable to enqueue notification:" e))))
 
 (defn consume-and-enqueue
@@ -51,7 +53,7 @@
         (sqs/deleting-consumer client enqueue-message)
         (sqs/receive client @q :limit 100))))
     (catch Throwable e
-      (println "Exception trying to consume SQS messages:" e))))
+      (log/warn e "Exception trying to consume SQS messages"))))
 
 (defn publish-message [msg]
   (sqs/send client q msg))
