@@ -10,4 +10,4 @@
 
 ;; Begin SQS consumption, every 10 seconds
 (jobs/schedule "sqs-notification" consume-and-enqueue :every 5000)
-(msg/publish notify-queue "Initialized norad SQS pulling")
+(msg/publish notify-queue "Initialized norad SQS polling")
