@@ -53,7 +53,7 @@
         (sqs/deleting-consumer client enqueue-message)
         (sqs/receive client @q :limit 100))))
     (catch Throwable e
-      (log/warn e "Exception trying to consume SQS messages"))))
+      (log/warn "Exception trying to consume SQS messages:" e))))
 
 (defn publish-message [msg]
   (sqs/send client q msg))
