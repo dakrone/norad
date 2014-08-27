@@ -4,6 +4,8 @@
             [clojure.tools.logging :as log]
             [immutant.messaging :as msg]))
 
+(def notify-queue (msg/queue "queue.notifications"))
+
 (def notify-send-cmd "notify-send")
 (def terminal-notifier-cmd "terminal-notifier")
 (def growlnotify-cmd "growlnotify")
@@ -34,7 +36,7 @@
   (when terminal-notifier-enabled?
     (sh/sh terminal-notifier-cmd
            "-title"
-           "Denver Clojure"
+           "Norad"
            "-message"
            (str body))))
 
@@ -59,7 +61,7 @@
   "Handler for enqueuing notification messages"
   [request]
   (try
-    (msg/publish "queue.notifications" (slurp (:body request)))
+    (msg/publish notify-queue (slurp (:body request)))
     {:status 200
      :body (str {:success true} "\n")
      :headers {"Content-Type" "application/edn"}}

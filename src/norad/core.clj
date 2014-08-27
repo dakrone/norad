@@ -1,5 +1,5 @@
 (ns norad.core
-  (:require [norad.notify]
+  (:require [norad.notify :refer [notify notify-handler notify-queue]]
             [norad.sqs :refer [consume-and-enqueue]]
             [immutant.messaging :as msg]
             [immutant.scheduling :as schedule]
@@ -7,11 +7,10 @@
 
 
 (defn -main [& args]
-  (let [notify-queue (msg/queue "queue.notifications")
-        notify-listener (msg/listen notify-queue norad.notify/notify :concurrency 4)]
-    (web/run norad.notify/notify-handler
+  (let [notify-listener (msg/listen notify-queue notify :concurrency 4)]
+    (web/run notify-handler
       {:host "localhost"
        :port 8080
        :path "/"})
     (schedule/schedule consume-and-enqueue :every 5000)
-    (msg/publish notify-queue "Initialized norad SQS polling")))
+    (notify "Initialized norad SQS polling")))
