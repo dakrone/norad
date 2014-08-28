@@ -35,7 +35,8 @@
 (defn enqueue-message
   [{:keys [body]}]
   (try
-    (let [{:keys [queue msg]} (read-string body)]
+    (let [{:keys [queue msg]} (read-string body)
+          queue (msg/queue queue)]
       (msg/publish queue msg))
     (catch Exception e
       (log/warn e "Unable to enqueue notification")

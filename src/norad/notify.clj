@@ -66,6 +66,8 @@
      :body (str {:success true} "\n")
      :headers {"Content-Type" "application/edn"}}
     (catch Throwable e
+      (.printStackTrace e)
+      (log/warn e "Caught exception running notify handler")
       {:status 500
        :body (str {:success false :exception (str e)} "\n")
        :headers {"Content-Type" "application/edn"}})))

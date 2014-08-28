@@ -12,8 +12,7 @@ Put this into `etc/sqs.clj`:
 ```
 
 ```
-$ lein immutant deploy
-$ lein immutant run
+$ lein run
 ```
 
 Norad will then attempt to consume messages from
@@ -26,17 +25,18 @@ Messages should be a string that looks like:
 "{:queue \"queue.notifications\" :msg \"this is a message\"}"
 ```
 
-Heavy a work in progress.
+Heavy work in progress.
 
 ## Modules
 
-See also:
+- notify - send notifications using growl, terminal-notifier, or notify-send
 
-- [screamy](https://github.com/dakrone/screamy)
+See also
+
 - [metube](https://github.com/dakrone/metube)
 
 ## License
 
-Copyright © 2013 Matthew Lee Hinman
+Copyright © 2013-2014 Matthew Lee Hinman
 
-Distributed under the Eclipse Public License, the same as Clojure.
+Distributed under the Eclipse Public License
