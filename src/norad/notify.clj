@@ -26,7 +26,7 @@
   (when notify-enabled?
     (sh/sh notify-send-cmd
            "--urgency=normal"
-           (str "--icon=" (.getAbsolutePath (file (resource icon))))
+;;           (str "--icon=" (.getAbsolutePath (file (resource icon))))
            "--app-name=Norad"
            "Norad"
            (str body))))
@@ -35,7 +35,7 @@
   [body & [summary]]
   (when terminal-notifier-enabled?
     (sh/sh terminal-notifier-cmd
-           "-appIcon" (.getAbsolutePath (file (resource icon)))
+;;           "-appIcon" (.getAbsolutePath (file (resource icon)))
            "-title" "Norad"
            "-message" (str body))))
 
