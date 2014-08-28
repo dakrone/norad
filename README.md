@@ -15,6 +15,13 @@ Put this into `etc/sqs.clj`:
 $ lein run
 ```
 
+Or, if you have WildFly installed:
+
+```
+lein immutant war -o $JBOSS_HOME
+$JBOSS_HOME/bin/standalone.sh -c standalone-full.xml
+```
+
 Norad will then attempt to consume messages from
 [SQS](https://aws.amazon.com/sqs/) and send them to your notifier
 (presumably screamy).
