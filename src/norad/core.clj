@@ -17,4 +17,4 @@
     (log/info "starting up sqs consumer...")
     (schedule/schedule consume-and-enqueue (schedule/every 5 :seconds))
     (log/info "started.")
-    (notify "Initialized norad SQS polling")))
+    (notify "Norad Initialized")))

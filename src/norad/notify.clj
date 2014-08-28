@@ -27,18 +27,17 @@
     (sh/sh notify-send-cmd
            "--urgency=normal"
            (str "--icon=" (.getAbsolutePath (file (resource icon))))
-           "--app-name=Screamy"
-           "MCP"
+           "--app-name=Norad"
+           "Norad"
            (str body))))
 
 (defn terminal-notifier
   [body & [summary]]
   (when terminal-notifier-enabled?
     (sh/sh terminal-notifier-cmd
-           "-title"
-           "Norad"
-           "-message"
-           (str body))))
+           "-appIcon" (.getAbsolutePath (file (resource icon)))
+           "-title" "Norad"
+           "-message" (str body))))
 
 (defn growlnotify
   [body & [summary]]
